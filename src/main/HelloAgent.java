@@ -1,10 +1,13 @@
 package main;
 
+import java.util.Random;
+
 import jade.core.Agent;
 import jade.util.leap.Iterator;
+import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.SimpleBehaviour;
-
+import jade.core.behaviours.TickerBehaviour;
 public class HelloAgent extends Agent {
 
 
@@ -32,7 +35,7 @@ public class HelloAgent extends Agent {
 //				System.out.println("No Arguments");
 //			}
 //		}
-		addBehaviour(new SimpleBehaviour() {
+		addBehaviour(new SimpleBehaviour(this) {
 			
 			@Override
 			public boolean done() {
@@ -47,7 +50,7 @@ public class HelloAgent extends Agent {
 			}
 		});
 		
-		addBehaviour(new OneShotBehaviour() {
+		addBehaviour(new OneShotBehaviour(this) {
 			
 			@Override
 			public void action() {
@@ -55,6 +58,31 @@ public class HelloAgent extends Agent {
 				
 			}
 		});
+		
+		addBehaviour(new SimpleBehaviour() {
+			
+			boolean weDone = false;
+			
+			@Override
+			public boolean done() {
+				// TODO Auto-generated method stub
+				if (weDone) return true;
+				else return false;
+			}
+			
+			@Override
+			public void action() {
+				Random r = new Random();
+				int rand = r.nextInt(10) + 1;
+				System.out.println(rand);
+				if(rand == 8) {
+					System.out.println("bye");
+					weDone = true;
+				}
+			}
+		});
+		
+		
 //		doDelete();
 	}
 	
