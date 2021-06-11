@@ -8,6 +8,7 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.core.behaviours.TickerBehaviour;
+import jade.domain.JADEAgentManagement.KillAgent;
 public class HelloAgent extends Agent {
 
 
@@ -59,14 +60,16 @@ public class HelloAgent extends Agent {
 			}
 		});
 		
-		addBehaviour(new SimpleBehaviour() {
+		addBehaviour(new SimpleBehaviour(this) {
 			
 			boolean weDone = false;
 			
 			@Override
 			public boolean done() {
 				// TODO Auto-generated method stub
-				if (weDone) return true;
+				if (weDone) {
+					return true;
+				}
 				else return false;
 			}
 			
@@ -76,9 +79,15 @@ public class HelloAgent extends Agent {
 				int rand = r.nextInt(10) + 1;
 				System.out.println(rand);
 				if(rand == 8) {
-					System.out.println("bye");
 					weDone = true;
 				}
+			}
+			
+			@Override
+			public int onEnd() {
+				doDelete();
+				return 0;
+				
 			}
 		});
 		
@@ -86,8 +95,8 @@ public class HelloAgent extends Agent {
 //		doDelete();
 	}
 	
-//	protected void takeDown() {
-//		System.out.println("Bye ..");
-//	}
+	protected void takeDown() {
+		System.out.println("Bye ..");
+	}
 	
 }
