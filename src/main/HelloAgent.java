@@ -95,6 +95,9 @@ public class HelloAgent extends Agent {
 //		doDelete();
 	}
 	
+	//No you can't stop a CyclicBehavior because it's "done" method
+	//is final and it always returns false.
+	
 	protected void takeDown() {
 		System.out.println("Bye ..");
 	}
